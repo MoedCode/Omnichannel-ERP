@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: omnimerch_db
+    environment:
+      MYSQL_DATABASE: omnimerch_erp
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: erp_user
+      MYSQL_PASSWORD: erp_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - erp_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: omnimerch_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - erp_network
+
+  web:
+    build: .
+    container_name: omnimerch_web
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn omnimerch_erp.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=your-production-secret-key-change-this
+      - DB_ENGINE=django.db.backends.mysql
+      - DB_NAME=omnimerch_erp
+      - DB_USER=erp_user
+      - DB_PASSWORD=erp_password
+      - DB_HOST=db
+      - DB_PORT=3306
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - db
+      - redis
+    networks:
+      - erp_network
+
+volumes:
+  mysql_data:
+  static_volume:
+  media_volume:
+
+networks:
+  erp_network:
+    driver: bridge
