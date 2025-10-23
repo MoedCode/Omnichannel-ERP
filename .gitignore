@@ -1,0 +1,102 @@
+# ========================================
+# 🧠 Omnichannel ERP - .gitignore
+# ========================================
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ---- Django ----
+db.sqlite3
+*.log
+media/
+staticfiles/
+local_settings.py
+
+# ---- Environment / Virtualenv ----
+.env
+*.env
+env/
+venv/
+pyenv-*/
+.venv/
+.env.bak
+
+# ---- IDE / Editors ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- OS / System Files ----
+.DS_Store
+Thumbs.db
+
+# ---- Byte-compiled / cache ----
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# ---- Migrations ----
+**/migrations/__pycache__/
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# ---- Logs ----
+logs/
+*.log
+*.out
+*.err
+
+# ---- Test / Coverage ----
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.hypothesis/
+
+# ---- Build / Distribution ----
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# ---- Node / Frontend (if integrated) ----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ---- Docker / Compose ----
+docker-compose.override.yml
+*.pid
+
+# ---- Backup / Temp ----
+*.bak
+*.tmp
+*.temp
+*.old
+
+# ---- PostgreSQL ----
+*.sql
+*.dump
+
+# ---- VSCode / JetBrains ----
+.vscode/
+.idea/
+
+# ---- Others ----
+__pycache__/
+tmp/
+cache/
