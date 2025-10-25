@@ -1,124 +1,68 @@
-# 🧩 MerchPro ERP (Django ERP for Merchandise & Maintenance Companies)
+# 🧩 MerchPro ERP
+### (Omnichannel ERP for Merchandise, Maintenance & Service Companies)
 
-A modern **Django-based ERP system** tailored for small merchandise and maintenance companies.
-It provides complete control over **inventory, sales, CRM, and repair operations**, with room to expand into HR, procurement, and analytics.
+A modern **Django-based ERP system** designed for small to medium **merchandise and maintenance** businesses.
+It unifies **inventory, operations, CRM, accounting, and online store management** under one scalable backend — with JWT authentication and modular design.
 
 ---
 
-## 🚀 Features
+## 🚀 Core Features
 
-### Phase 1 (MVP)
-- 🏪 **Inventory Management:** Track stock, conditions (new/used), and store locations.
-- 👥 **CRM (Customer Relationship Management):** Manage clients, feedback, and service history.
-- 🛠️ **Maintenance Module:** Register repair jobs, assign technicians, and invoice after repair.
-- 🛒 **Sales & Store (POS + Online):** Unified inventory for online and in-store sales.
-- 💰 **Basic Accounting:** Record sales, repair invoices, and basic expenses.
-- 📊 **Admin Dashboard:** Overview of all modules — sales, repairs, staff, and inventory.
+### **Phase 1 (MVP)**
+- 🏪 **Inventory Management**
+  Manage stock, categories, product conditions (new/used), and multi-location tracking.
 
-### Phase 2 (Expansion)
-- 📦 **Procurement:** Supplier management, purchase orders, and delivery tracking.
-- 👔 **HR & Roles:** Employee records, roles, payroll, and access control.
-- 🔔 **Notifications:** Email/SMS/app alerts for tasks and approvals.
-- 📈 **Analytics:** Reports, KPIs, and performance insights.
-- 📁 **Document Management:** Upload contracts, invoices, and receipts.
-- 🔗 **Integration Layer:** Connect with payment gateways, APIs, and external tools.
+- 🔧 **Operations Module (Sales, Purchases, Services, Maintenance)**
+  - Record **purchases** from vendors, suppliers, or corporate clearance.
+  - Register **sales** to customers (in-store or corporate).
+  - Manage **services** like software installation or system setup (even if not purchased internally).
+  - Track **maintenance** tasks — diagnostics, repairs, or support after sale.
+
+- 👥 **CRM (Customer Relationship Management)**
+  Manage customers, vendors, service history, and feedback.
+
+- 🧾 **Accounting**
+  Basic transaction tracking for sales, purchases, and service invoices.
+
+- 🛒 **E-Commerce (Online Store)**
+  Optional module for managing online product listings and web orders, connected to the same inventory.
+
+- 📊 **Dashboard**
+  Unified admin dashboard summarizing key metrics across operations, inventory, and accounting.
+
+---
+
+### **Phase 2 (Expansion)**
+- 📦 **Procurement** – Supplier management, purchase orders, and delivery tracking.
+- 👔 **HR & Roles** – Employee records, roles, payroll, and permissions.
+- 🔔 **Notifications** – Email/SMS/app alerts for workflow updates.
+- 📈 **Analytics** – Reports, KPIs, and performance tracking.
+- 📁 **Documents** – Upload invoices, receipts, and PDFs.
+- 🔗 **Integration Layer** – API gateways and payment integrations.
 
 ---
 
 ## 🧱 Project Structure
 
-```
-merchandise_erp/
+```bash
+Omnichannel-ERP/
 │
 ├── manage.py
-├── requirements.txt
 ├── README.md
-├── .gitignore
+├── LICENSE
 │
-├── merchandise_erp/             # Project config (settings, urls, wsgi)
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   ├── asgi.py
+├── core/               # Base model, utilities, and shared mixins
+├── users/              # Custom JWT user model (extends AbstractUser + Base)
+├── inventory/          # Inventory, products, warehouses, stock management
+├── operations/         # Sales, purchases, maintenance, and service orders
+├── ecommerce/          # Online store module (optional)
+├── accounting/         # Basic accounting and transactions
+├── crm/                # Customers, vendors, relations
+├── dashboard/          # Overview and analytics dashboard
+├── documents/          # Document uploads (contracts, invoices, etc.)
 │
-├── apps/
-│   ├── inventory/               # Inventory Management
-│   ├── crm/                     # Customer Relationship Management
-│   ├── maintenance/             # Repair Jobs / Service Management
-│   ├── sales/                   # Online + POS Sales
-│   ├── accounting/              # Basic Accounting / Transactions
-│   ├── dashboard/               # Admin Dashboard (control panel)
-│
-│   ├── procurement/             # Supplier & Purchase Orders (Phase 2)
-│   ├── hr/                      # Employees, Payroll, Roles (Phase 2)
-│   ├── notifications/           # Alerts, reminders (Phase 2)
-│   ├── analytics/               # Reports, KPIs (Phase 2)
-│   ├── documents/               # PDF uploads, receipts (Phase 2)
-│   ├── integration/             # External APIs, gateways (Phase 2)
-│
-└── static/                      # Shared static files
-└── media/                       # Uploaded images/files
-```
-
----
-
-## ⚙️ Tech Stack
-
-- **Backend:** Django, Django REST Framework
-- **Auth:** JWT Authentication (via `djangorestframework-simplejwt`)
-- **Database:** PostgreSQL
-- **Frontend (Future):** Next.js / React (for dashboard and online store)
-- **Containerization:** Docker
-- **Deployment:** Nginx + Gunicorn (Linux/Ubuntu server)
-
----
-
-## 🪜 Setup Instructions
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/Django-ERP-4MMC.git
-cd Django-ERP-4MMC
-
-# Create and activate a virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start project
-python manage.py runserver
-```
-
----
-
-## 🧩 Licensing
-
-This project is licensed under the **MIT License**, allowing personal and commercial use, modification, and distribution.
-If customized for a client, you can deliver compiled or hosted versions without exposing proprietary business logic.
-
----
-
-## ✨ Author
-**Pro-Eng**
-Python Backend Developer — passionate about ERP systems, Django, and business automation.
-📧 Contact: *(your email or GitHub profile)*
-
----
-now let us make  JWT  user class that extend Django user module ahve
-Base model
-created_at: string date time  unable to change created on  with same object date time creation
-undated_at: string date time  = created_at at moment of  creation but auto change at any update
-id: sting UUID 4
-
-Users model
-username: sting
-city code for phone 1 like 02 o Egypt 01+ or us and so on
-phone-number1: string
-city code for phone tow   optional
-phone-number2: string optional
-
-email : string
-address  optional
+├── business_core/      # Shared business logic and data operations
+├── apps.sh             # App management script
+├── psqlcmd.md          # PostgreSQL command references
+├── test.py / test.sql  # Development test files
+└── requirements.txt
