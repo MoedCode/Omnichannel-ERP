@@ -107,3 +107,18 @@ Python Backend Developer — passionate about ERP systems, Django, and business 
 📧 Contact: *(your email or GitHub profile)*
 
 ---
+now let us make  JWT  user class that extend Django user module ahve
+Base model
+created_at: string date time  unable to change created on  with same object date time creation
+undated_at: string date time  = created_at at moment of  creation but auto change at any update
+id: sting UUID 4
+
+Users model
+username: sting
+city code for phone 1 like 02 o Egypt 01+ or us and so on
+phone-number1: string
+city code for phone tow   optional
+phone-number2: string optional
+
+email : string
+address  optional

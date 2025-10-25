@@ -50,17 +50,18 @@ INSTALLED_APPS = [
 
     # Business core modules
     'accounting',
-    'analytics',
+    # 'analytics',
     'crm',
     'dashboard',
     'documents',
-    'hr',
-    'integration',
+    # 'hr',
+    # 'integration',
     'inventory',
-    'maintenance',
-    'notifications',
-    'procurement',
-    'sales',
+    # 'notifications',
+    # 'procurement',
+    'users',
+    'operations',
+    'ecommerce';
 ]
 
 MIDDLEWARE = [
