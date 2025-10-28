@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Computer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 100, 255, 0.15) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgShift 15s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        header {
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 50%, #7000ff 100%);
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0, 100, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.03) 10px,
+                rgba(255,255,255,0.03) 20px
+            );
+            animation: headerMove 20s linear infinite;
+        }
+
+        @keyframes headerMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        header h1 {
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            text-shadow:
+                0 0 10px rgba(255,255,255,0.5),
+                0 0 20px rgba(0,200,255,0.5),
+                0 0 40px rgba(0,100,255,0.3),
+                3px 3px 5px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(0,200,255,0.5), 0 0 40px rgba(0,100,255,0.3); }
+            50% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(0,200,255,0.8), 0 0 60px rgba(0,100,255,0.6); }
+        }
+
+        header p {
+            font-size: 1.4em;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        nav {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            padding: 18px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 30px rgba(0,100,255,0.3);
+            border-bottom: 2px solid rgba(0,200,255,0.5);
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.15em;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #0066ff, #7000ff);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        nav a:hover::before {
+            transform: scaleX(1);
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0,212,255,0.5);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 50px auto;
+            background: rgba(20,20,30,0.9);
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.5),
+                0 0 100px rgba(0,100,255,0.2),
+                inset 0 0 100px rgba(0,100,255,0.05);
+            border: 1px solid rgba(0,200,255,0.2);
+        }
+
+        .container h2 {
+            color: #00d4ff;
+            font-size: 3em;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(0,212,255,0.5);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .container h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(90deg, #00d4ff, #0066ff, #7000ff);
+            border-radius: 3px;
+            box-shadow: 0 0 20px rgba(0,212,255,0.5);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .product {
+            background: linear-gradient(145deg, rgba(30,30,50,0.95), rgba(20,20,40,0.95));
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow:
+                0 10px 40px rgba(0,0,0,0.5),
+                0 0 30px rgba(0,100,255,0.2);
+            transition: all 0.5s ease;
+            position: relative;
+            border: 2px solid rgba(0,200,255,0.2);
+        }
+
+        .product::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0,212,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .product:hover::before {
+            left: 100%;
+        }
+
+        .product:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.7),
+                0 0 60px rgba(0,212,255,0.4);
+            border-color: rgba(0,212,255,0.6);
+        }
+
+        .product img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            filter: brightness(0.9);
+        }
+
+        .product:hover img {
+            transform: scale(1.15);
+            filter: brightness(1.1);
+        }
+
+        .product-content {
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product h3 {
+            margin: 10px 0;
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .product p {
+            font-size: 1em;
+            color: #ccc;
+            line-height: 1.7;
+            margin: 15px 0;
+        }
+
+        .product .price {
+            color: #00ff88;
+            font-size: 2em;
+            font-weight: 900;
+            margin: 20px 0;
+            text-shadow: 0 0 15px rgba(0,255,136,0.5);
+        }
+
+        .product button {
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 50%, #7000ff 100%);
+            color: #fff;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.4s ease;
+            box-shadow:
+                0 5px 25px rgba(0,100,255,0.4),
+                inset 0 0 20px rgba(255,255,255,0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product button:hover {
+            transform: scale(1.08);
+            box-shadow:
+                0 8px 35px rgba(0,212,255,0.6),
+                inset 0 0 30px rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 50%, #0066ff 100%);
+        }
+
+        .product button:active {
+            transform: scale(0.95);
+        }
+
+        section {
+            margin-top: 70px;
+            padding: 40px;
+            background: linear-gradient(145deg, rgba(30,30,50,0.8), rgba(20,20,40,0.8));
+            border-radius: 20px;
+            border: 2px solid rgba(0,200,255,0.2);
+            box-shadow:
+                0 10px 40px rgba(0,0,0,0.5),
+                0 0 30px rgba(0,100,255,0.2);
+        }
+
+        section h2 {
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0,212,255,0.5);
+        }
+
+        section p {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #ddd;
+            text-align: justify;
+        }
+
+        form {
+            margin-top: 25px;
+        }
+
+        form label {
+            font-weight: 700;
+            color: #00d4ff;
+            font-size: 1.15em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 12px 0 25px 0;
+            border: 2px solid rgba(0,200,255,0.3);
+            border-radius: 15px;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+        }
+
+        form input:focus, form textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0,212,255,0.3);
+            background: rgba(0,0,0,0.5);
+        }
+
+        form input::placeholder, form textarea::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        form button {
+            background: linear-gradient(135deg, #00d4ff 0%, #0066ff 50%, #7000ff 100%);
+            color: #fff;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 25px rgba(0,100,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        form button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 35px rgba(0,212,255,0.6);
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 50%, #0066ff 100%);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #000 0%, #0a0a1a 100%);
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+            font-size: 1.15em;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            border-top: 2px solid rgba(0,200,255,0.3);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            nav a {
+                margin: 0 10px;
+                font-size: 0.95em;
+            }
+
+            .container {
+                margin: 25px;
+                padding: 25px;
+            }
+
+            .container h2 {
+                font-size: 2em;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .welcome-text {
+            text-align: center;
+            font-size: 1.3em;
+            color: #bbb;
+            margin: 35px 0;
+            line-height: 2;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚡ ACTIVE COMPUTER ⚡</h1>
+        <p>متجرك الموثوق للكمبيوتر والإكسسوارات</p>
+    </header>
+
+    <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#products">المنتجات</a>
+        <a href="#about">من نحن</a>
+        <a href="#contact">تواصل معنا</a>
+    </nav>
+
+    <div class="container" id="home">
+        <h2>مرحباً بك في Active Computer</h2>
+        <p class="welcome-text">نقدم لك أحدث أجهزة الكمبيوتر واللابتوب والإكسسوارات بأفضل الأسعار. تصفح منتجاتنا المميزة أدناه!</p>
+
+        <section class="products" id="products">
+            <div class="product">
+                <img src="https://scontent.fcai21-4.fna.fbcdn.net/v/t45.5328-4/561671781_788812387413959_3103182478371366544_n.jpg?stp=c0.43.261.261a_dst-jpg_p261x260_tt6&_nc_cat=101&ccb=1-7&_nc_sid=247b10&_nc_ohc=jOD3m3IJmPoQ7kNvwF5Ag6f&_nc_oc=AdmfqTqkhsYhSKGVuxZiCNH3kxbY_579MAHYYitBFtzu5hUsmle9ZAyWeTps1Kcihwc&_nc_zt=23&_nc_ht=scontent.fcai21-4.fna&_nc_gid=9KSxKp-KaTQ7-ZjjPJN10A&oh=00_AfewHR-idoTyVX3h7jkJRfQS6BA0E1GH5hxjixg0i3esHQ&oe=68EB0C2B" alt="Gaming Laptop">
+                <div class="product-content">
+                    <h3>لابتوب جيمنج برو</h3>
+                    <p>لابتوب عالي الأداء بمعالج Intel i5، رام 8 جيجا، وقرص تخزين 256 جيجا M.2</p>
+                    <div class="price">ج1,299</div>
+                    <button>أضف للسلة ?</button>
+                </div>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Desktop PC">
+                <div class="product-content">
+                    <h3>كمبيوتر مكتبي ألترا</h3>
+                    <p>كمبيوتر قوي بمعالج AMD Ryzen 7، رام 32 جيجا، SSD 1 تيرا، وكارت شاشة Radeon RX 6700 XT</p>
+                    <div class="price">$1,499</div>
+                    <button>أضف للسلة ?</button>
+                </div>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Monitor">
+                <div class="product-content">
+                    <h3>شاشة 4K فائقة الدقة</h3>
+                    <p>شاشة 27 بوصة بدقة 4K مع شاشة IPS، معدل تحديث 144Hz، ودعم HDR</p>
+                    <div class="price">$399</div>
+                    <button>أضف للسلة ?</button>
+                </div>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80" alt="Wireless Mouse">
+                <div class="product-content">
+                    <h3>ماوس لاسلكي</h3>
+                    <p>ماوس بتصميم مريح مع إمكانية تعديل DPI وبطارية طويلة الأمد</p>
+                    <div class="price">$29</div>
+                    <button>أضف للسلة ?</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>من نحن</h2>
+            <p>متجر Active Computer يخدم العملاء منذ عام 2010، حيث نقدم أجهزة كمبيوتر وإكسسوارات عالية الجودة مع خدمة عملاء ممتازة. فريقنا شغوف بالتكنولوجيا ومستعد لمساعدتك في العثور على الجهاز المثالي لاحتياجاتك.</p>
+        </section>
+
+        <section id="contact">
+            <h2>تواصل معنا</h2>
+            <form>
+                <label for="name">الاسم:</label>
+                <input type="text" id="name" name="name" required placeholder="أدخل اسمك">
+
+                <label for="email">البريد الإلكتروني:</label>
+                <input type="email" id="email" name="email" required placeholder="أدخل بريدك الإلكتروني">
+
+                <label for="message">الرسالة:</label>
+                <textarea id="message" name="message" rows="4" required placeholder="اكتب رسالتك هنا"></textarea>
+
+                <button type="submit">إرسال ?</button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        ⚡ 2025 Active Computer Store. جميع الحقوق محفوظة. ⚡
+    </footer>
+</body>
+</html>

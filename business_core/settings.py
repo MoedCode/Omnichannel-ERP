@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-==j0t70izj=c%!c%jza8*3%dn5(3+vt7*(dap4vo7=(##bdgtb
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'users.User'
 
 
 # Application definition
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
  # Third-party apps
     'rest_framework',
     'corsheaders',
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'anymail',
     'rangefilter',
+
     # optional:
     # 'localflavor',
     # 'modeltranslation',
@@ -61,7 +64,8 @@ INSTALLED_APPS = [
     # 'procurement',
     'users',
     'operations',
-    'ecommerce';
+    'ecommerce',
+    'auth_api'
 ]
 
 MIDDLEWARE = [
