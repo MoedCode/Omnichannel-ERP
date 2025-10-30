@@ -13,6 +13,12 @@ class LoginSerializer(Serializer):
     username = CharField(required=True)
     password = CharField(write_only=True, required=True)
 
+from rest_framework import serializers
+
+class LogoutSerializer(serializers.Serializer):
+    """No input fields — logout just uses the current session."""
+    pass
+
 
 # ------------------------------------------------
 # 🔹 Login View — Generic
@@ -44,8 +50,7 @@ class SessionLoginView(generics.GenericAPIView):
 # 🔹 Logout View — Generic
 # ------------------------------------------------
 class SessionLogoutView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [SessionAuthentication]
+    serializer_class = LogoutSerializer
 
     def post(self, request, *args, **kwargs):
         logout(request)
