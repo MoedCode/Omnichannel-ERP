@@ -113,11 +113,8 @@ class PhoneNumber(Base):
     # ------------------------------------------------
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
+
 class Profile(Base):
-    """
-    Represents extended user information (bio, image, etc.)
-    Automatically created when a user is registered.
-    """
     user = models.OneToOneField(
         "users.User",
         on_delete=models.CASCADE,
@@ -137,39 +134,19 @@ class Profile(Base):
     def __str__(self):
         return f"Profile of {self.user.username}"
 
-    # ------------------------------------------------
-    # ✅ Custom SAVE (auto validation)
-    # ------------------------------------------------
     def save(self, *args, **kwargs):
+        # Delete old image if a new one is uploaded
+        if self.pk:
+            old = Profile.objects.filter(pk=self.pk).first()
+            if old and old.profile_image and old.profile_image != self.profile_image:
+                old.profile_image.delete(save=False)
+
         if not self.user_id:
             raise ValidationError("Profile must be linked to a valid user.")
         super().save(*args, **kwargs)
 
-    # ------------------------------------------------
-    # ✅ UPDATE profile safely
-    # ------------------------------------------------
-    def update(self, **kwargs):
-        allowed_fields = [
-            "full_name",
-            "profile_image",
-            "job_title",
-            "bio",
-            "date_of_birth",
-            "gender",
-            "is_public"
-        ]
-        for field, value in kwargs.items():
-            if field in allowed_fields:
-                setattr(self, field, value)
-        self.save()
-        return self
-
-    # ------------------------------------------------
-    # ✅ DELETE profile safely
-    # ------------------------------------------------
     def delete(self, *args, **kwargs):
-        with transaction.atomic():
-            # Example: remove uploaded image if exists
-            if self.profile_image:
-                self.profile_image.delete(save=False)
-            super().delete(*args, **kwargs)
+        # Delete image from disk when profile is deleted
+        if self.profile_image:
+            self.profile_image.delete(save=False)
+        super().delete(*args, **kwargs)
