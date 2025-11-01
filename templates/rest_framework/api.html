@@ -1,0 +1,28 @@
+{% extends "rest_framework/base.html" %}
+
+{% block branding %}
+  <h3 style="margin: 0 20px;">My API</h3>
+  <button id="auth-btn" style="float:right;margin-right:20px;">Authorize</button>
+{% endblock %}
+
+{% block script %}
+  {{ block.super }}
+  <script>
+    document.getElementById('auth-btn').onclick = function() {
+      const token = prompt("Enter your JWT access token:");
+      if (token) {
+        localStorage.setItem('jwt', token);
+        alert("✅ Token saved! All requests will now include it.");
+      }
+    };
+
+    // Automatically attach token to all API requests
+    const origFetch = window.fetch;
+    window.fetch = function(url, opts = {}) {
+      const token = localStorage.getItem('jwt');
+      opts.headers = opts.headers || {};
+      if (token) opts.headers['Authorization'] = 'Bearer ' + token;
+      return origFetch(url, opts);
+    };
+  </script>
+{% endblock %}

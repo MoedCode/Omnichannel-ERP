@@ -1,3 +1,5 @@
+in those endpoint there are no way tp provide  request haders wither with from or row data
+```py
 # users/views.py
 from rest_framework import generics, status
 from rest_framework.response import Response
@@ -5,6 +7,8 @@ from users.models import User,Profile
 from users.serializers import UserSerializer, ProfileSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
+
+@permission_classes([AllowAny])
 class RegisterView(generics.CreateAPIView):
 
     queryset = User.objects.all()
@@ -58,3 +62,4 @@ class ProfileRetrieveUpdateView(generics.RetrieveUpdateAPIView):
             "message": "Profile updated successfully.",
             "profile": serializer.data
         }, status=status.HTTP_200_OK)
+```
